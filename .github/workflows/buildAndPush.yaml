@@ -2,7 +2,7 @@ name: Build and Push
 on:
   pull_request:
     branches:
-      - master
+      - main
     types: [closed] # pull requestがクローズしたタイミングで実施
 
 jobs:
