@@ -1,9 +1,8 @@
 name: Build and Push
 on:
-  pull_request:
-    branches:
-      - main
-    types: [closed] # pull requestがクローズしたタイミングで実施
+  push:
+    tags:
+      - v*
 
 jobs:
   build-and-push:
