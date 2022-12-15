@@ -57,4 +57,4 @@ const TeraTypeName = styled.select`
 `
 
 
-export {PokeTypeStyle, PokeTypeName, TeraTypeName, SelectBox, SelectPokeTypeName}
+export {PokeTypeStyle, PokeTypeName, TeraTypeName}
