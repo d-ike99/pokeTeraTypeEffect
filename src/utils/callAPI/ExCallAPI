@@ -1,0 +1,49 @@
+import axios from "axios";
+
+const ENDPOINT_URL = '/api/Notes'
+
+const callAPI = {
+    // get method
+    async getPokeInfo(path = '') {
+        const getPath = `${process.env.NEXT_PUBLIC_POKE_INFO_URL}/${path}`
+        const result = await callAPI.get(getPath)
+
+        return result;
+    },
+    async getPokeName(path=''){
+        console.log("getPokeName called")
+        const getPath = `${process.env.NEXT_PUBLIC_POKE_NAME_URL}/${path}`
+        const result = await callAPI.get(getPath)
+
+        return result;
+    },
+    async get(getPath) {
+        const result = await axios.get(getPath)
+        return result.data
+    },
+    // post method
+    async post(note) {
+        const result = await axios.post(`${ENDPOINT_URL}/Post/`, note)
+        console.log(result);
+
+        return result.data;
+    },
+    // delete
+    async delete(note) {
+        const result = await axios.delete(`${ENDPOINT_URL}/Delete/${note.id}`, note)
+        console.log(result);
+
+        return result.data;
+    },
+    // patch
+    async patch(note) {
+        const result = await axios.put(`${ENDPOINT_URL}/Post/${note.id}`, note);
+        console.log(result);
+
+        return result.data;
+    }
+}
+
+//callAPI.getAll();
+
+export default callAPI;
