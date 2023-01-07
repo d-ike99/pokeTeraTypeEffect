@@ -2,15 +2,17 @@ import Layout from '../components/Layout/ Layout'
 import Navbar from '../components/Navbar/Navbar'
 import '../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
+import { AllPokeIdProvider } from "../utils/context/AllPokeIdContext"
 
 function MyApp({ Component, pageProps }) {
   return (
     <Layout>
-      <Navbar>
-        <ChakraProvider>
+      <ChakraProvider>
+        <AllPokeIdProvider>
+          <Navbar />
           <Component {...pageProps} />
-        </ChakraProvider>
-      </Navbar>
+        </AllPokeIdProvider>
+      </ChakraProvider>
     </Layout>
 
   )

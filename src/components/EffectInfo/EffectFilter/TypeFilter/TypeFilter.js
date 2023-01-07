@@ -23,10 +23,24 @@ const customStyles = {
     // この設定で、タイプボックスの背景色が変わる
     padding: "0",
     margin: "0.5rem",
-  }), 
+  }),
+  multiValue: (styles, { data }) => {
+    const color = data.color;
+    return {
+      ...styles,
+      backgroundColor: color,
+      color: "white"
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: "white",
+  }),
 };
 
 const TypeFilter = () => {
+  // logs
+  console.log("type filter called")
   // state
   const typeFilterDispatch = useTypeFilterDispatch()
   
@@ -35,7 +49,8 @@ const TypeFilter = () => {
     return {
       value: oneType.name.jp,
       label: oneType.name.jp,
-      id: oneType.id
+      id: oneType.id,
+      color: oneType.color
     }
   })
 

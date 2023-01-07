@@ -13,6 +13,7 @@ const callAPI = {
     async getPokeName(path=''){
         console.log("getPokeName called")
         const getPath = `${process.env.NEXT_PUBLIC_POKE_NAME_URL}/${path}`
+        console.log(getPath)
         const result = await callAPI.get(getPath)
 
         return result;

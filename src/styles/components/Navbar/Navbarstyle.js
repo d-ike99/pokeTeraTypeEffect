@@ -4,7 +4,7 @@ const NavbarStyle = styled.div`
   /* display: grid; */
   top: 0;
   width: 100%;
-  background-color: whitesmoke;
+  background: linear-gradient(#F89174, #FFC778);
   /* box-shadow: 0 2px 4px gray; */
   display: flex;  /* これ追加で、自動的に背景白くなった */
   padding: 8px 5rem;
