@@ -30,9 +30,6 @@ const DetailContainer = styled.div`
 `
 
 const Name = ({ allPokeId }) => {
-  // デフォルトID
-  const pokeId = 635
-
   // stateにIDを保持
   const setAllPokeIdDispatch = useAllPokeIdDispatch()
   setAllPokeIdDispatch(allPokeId)
@@ -43,7 +40,7 @@ const Name = ({ allPokeId }) => {
       <DetailContainer>
         <PokeInfoProvider>
           <TeraTypeProvider>
-            <PokeInfo pokeID={pokeId} />
+            <PokeInfo />
             <EffectInfo></EffectInfo>
           </TeraTypeProvider>
         </PokeInfoProvider>

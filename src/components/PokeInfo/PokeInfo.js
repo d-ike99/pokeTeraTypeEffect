@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import styled from "styled-components"
+import { PokeInfoStyled } from './PokeInfoStyle'
 import callAPI from '../../utils/callAPI/ExCallAPI'
 import PokeName from './PokeName/PokeName'
 import { usePokeInfo, usePokeInfoDispatch } from '../../utils/context/PokeInfoContext'
 import { getTypeIdFromEnName } from '../../utils/data/TypeInfo'
 import PokeStats from './PokeStats/PokeStats'
 import PokeTypeContainer from './PokeType/PokeTypeContainer'
-
-const PokeInfoStyled = styled.div`
-  /* border: solid 5px; */
-  border-right: solid 2px whitesmoke;
-  width: 100vw;
-  /* width: 25%; */
-
-  // margin, padding
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-
-  @media (min-width: 600px) {
-    width: 25%;
-  }
-`
+import { usePokeId, usePokeIdDispatch } from '../../utils/context/PokeIdContext'
 
 const pokeInfoJson = {
   name: "",
@@ -29,27 +15,25 @@ const pokeInfoJson = {
   stats: []
 }
 
-const PokeInfo = ({ pokeID }) => {
+const PokeInfo = () => {
   console.log("pokeInfo called")
-  console.log("pokeInfo called test")
-  console.log(process.env.NEXT_PUBLIC_POKE_INFO_URL)
 
   // context呼び出し
   const pokeInfo = usePokeInfo()
   const pokeInfoDispatch = usePokeInfoDispatch()
-  
+  let pokeId = usePokeId()
 
   // useEffectで、引数のIDに応じたポケモンの名称、画像、タイプを取得する
   useEffect(() => {
     const getPokeInfo = async () => {
       console.log("useeffect start")
       // ポケモンの情報取得（アイコン、タイプ（英語））
-      const res_info = await callAPI.getPokeInfo(pokeID)
+      const res_info = await callAPI.getPokeInfo(pokeId)
       console.log(res_info)
       const type = getTypeIdFromEnName(res_info.types)
 
       // 名称取得
-      const res_name = await callAPI.getPokeName(pokeID)
+      const res_name = await callAPI.getPokeName(pokeId)
       console.log(res_name.names[0].name)
 
       // 種族値取得
@@ -93,7 +77,7 @@ const PokeInfo = ({ pokeID }) => {
       pokeInfoDispatch(newPokeInfo)
     }
     getPokeInfo()
-  }, [])
+  }, [pokeId])
 
   // ロード状態判定
   if(pokeInfo === false){
@@ -103,7 +87,7 @@ const PokeInfo = ({ pokeID }) => {
   // return
   return (
     <PokeInfoStyled>
-      <PokeName pokeID={pokeID}/>
+      <PokeName pokeID={pokeId}/>
       <PokeStats />
       <PokeTypeContainer />
 
