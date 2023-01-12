@@ -16,7 +16,9 @@ const addData = ({deffenceId, attackId, argList, sameAddFlg}) => {
     retList["list"].push(newList)
   } else {    
     // 最後の配列に対してデータ追加
-    retList.list.push(attackId)
+    const len = retList.list.length
+
+    retList.list[len-1].attackIdList.push(attackId)
   }
 
   return retList

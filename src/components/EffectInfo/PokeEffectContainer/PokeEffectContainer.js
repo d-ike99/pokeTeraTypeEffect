@@ -6,7 +6,7 @@ import EffectBox from './EffectBox/EffectBox'
 import { EffectBoxContainerStyled } from "./PokeEffectContainerStyle"
 import { DispLabel } from '../../Common/Label'
 import { useRankingPokeInfo } from '../../../utils/context/RankingPokeInfoContext'
-
+import { useSelectDispEffect } from '../../../utils/context/SelectDispEffect'
 
 const PokeEffectContainer = () => {
   // typeId取得
@@ -14,6 +14,7 @@ const PokeEffectContainer = () => {
   const typelist = pokeInfo["typeId"]
   const teraTypeId = useTeraType();
   const rankingPokeInfo = useRankingPokeInfo();
+  const selectDispEffect = useSelectDispEffect()
 
   console.log("pokeinfo effetinfo")
   console.log(typelist)
@@ -29,25 +30,35 @@ const PokeEffectContainer = () => {
   }
 
   // 相性関係作成
-  const newEffectMapList = getTypeEffectMapList({effect: "double", attackIdList: attackIdList, teraTypeId})  
-  const newHarlMapList = getTypeEffectMapList({effect: "half", attackIdList: attackIdList, teraTypeId})  
-  const newNoMapList = getTypeEffectMapList({effect: "no", attackIdList: attackIdList, teraTypeId})  
-  const newSameMapList = getTypeEffectMapList({effect: "same", attackIdList: attackIdList, teraTypeId})
+  // debugger
+  let quadrupleList
+  let doubleList
+  let sameList
+  let halfList
+  let quarterList
+  let noList
 
-  const test = getPokeEffectMapList({deffencePokeInfoList: rankingPokeInfo, attackIdList: attackIdList, teraTypeId: teraTypeId})
+  if(selectDispEffect === 0){
+    doubleList = getTypeEffectMapList({effect: "double", attackIdList: attackIdList, teraTypeId})  
+    halfList = getTypeEffectMapList({effect: "half", attackIdList: attackIdList, teraTypeId})  
+    noList = getTypeEffectMapList({effect: "no", attackIdList: attackIdList, teraTypeId})  
+    sameList = getTypeEffectMapList({effect: "same", attackIdList: attackIdList, teraTypeId})
+  } else {
+    ({quadrupleList, doubleList, sameList, halfList, quarterList, noList} = getPokeEffectMapList({deffencePokeInfoList: rankingPokeInfo, attackIdList: attackIdList, teraTypeId: teraTypeId}))
 
-  debugger
+  }
 
+  
   return (
     <>
       <DispLabel>
         <span>相性</span>
       </DispLabel>
       <EffectBoxContainerStyled>
-        <EffectBox key={"double"} effectMapList={newEffectMapList} />
-        <EffectBox key={"half"} effectMapList={newSameMapList}/>
-        <EffectBox key={"no"} effectMapList={newHarlMapList}/>
-        <EffectBox key={"same"} effectMapList={newNoMapList}/>
+        <EffectBox key={"double"} effectMapList={doubleList} />
+        <EffectBox key={"half"} effectMapList={halfList}/>
+        <EffectBox key={"no"} effectMapList={noList}/>
+        <EffectBox key={"same"} effectMapList={sameList}/>
       </EffectBoxContainerStyled>
     </>
     

@@ -558,7 +558,7 @@ const getTypeEffectMapList = ({effect, attackIdList, teraTypeId}) => {
 
   })
 
-  debugger
+  // debugger
   // タイプIDに関してソートを行う
   // const sortedType = sortType({sortList: effectList, teraTypeId})
 
