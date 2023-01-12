@@ -6,6 +6,7 @@ import { usePokeInfo, usePokeInfoDispatch, PokeInfoProvider } from '../../utils/
 import { TeraTypeProvider } from '../../utils/context/TeraTypeContext'
 import getAllPokeId from '../../utils/callAPI/getAllPokeId'
 import { useAllPokeIdDispatch } from '../../utils/context/AllPokeIdContext'
+import { RankingPokeInfoProvider } from '../../utils/context/RankingPokeInfoContext'
 
 const DetailContainer = styled.div`
   /* border-top: solid black; */
@@ -40,8 +41,10 @@ const Name = ({ allPokeId }) => {
       <DetailContainer>
         <PokeInfoProvider>
           <TeraTypeProvider>
-            <PokeInfo />
-            <EffectInfo></EffectInfo>
+            <RankingPokeInfoProvider>
+              <PokeInfo />
+              <EffectInfo></EffectInfo>
+            </RankingPokeInfoProvider>
           </TeraTypeProvider>
         </PokeInfoProvider>
       </DetailContainer>

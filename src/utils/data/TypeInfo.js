@@ -1,3 +1,4 @@
+import { addData } from "./treatData"
 
 const TypeIconPath = "/TypeIcon"
 const TypeImagePath = "/TypeImage"
@@ -357,52 +358,274 @@ const sortType = ({sortList, teraTypeId}) => {
   return sortedList
 }
 
-const getTypeEffect = ({attackIdList, effect, teraTypeId}) => {
+// 相性リスト
+const effectName = {
+  "quadruple": "×４： ばつぐん",
+  "double": "×２： ばつぐん",
+  "same": "×１： 等倍",
+  "half": "×1/2： いまひとつ",
+  "quarter": "×1/4： いまひとつ",
+  "no":  "×０： 効果なし",
+}
+const effectNameList = ["double", "same", "half", "no"]
+const effectMap = {
+  dispName: "",
+  list: false
+}
+const effectObj = {
+  deffenceId: "",
+  attackIdList: ""
+}
+
+/**
+ * 指定した"相性"に対する、攻撃側タイプの相性のマップデータを生成する
+ * @param {string} effect 相性（例：効果抜群、等倍　など）
+ * @param {array} attackIdList 攻撃側のポケモンのタイプ一覧（テラスタイプ含む）
+ * @param {int} teraTypeId 攻撃側ポケモンのテラスタイプ
+ * @returns {list} 
+ */
+const getTypeEffectMapList = ({effect, attackIdList, teraTypeId}) => {
   console.log("getTypeEffect")
   console.log(attackIdList)
 
-  const listTemp = {
-    deffenceId: "",
-    attackIdList: ""
-  }
-  const attackIdListTemp = []
-
-  // 一つのidでループ
-  let retList = []
-
+  // 初期値設定：攻撃、防御の相性リスト
+  let effectList = []
+  
+  // 攻撃、防御の相性リスト生成
   // デフェンス側のタイプを全ループ
-  typeInfo.forEach((oneType) => {
+  typeInfo.forEach((deffenceTypeInfo) => {
     // debugger
-    const newList = { ...listTemp }
-    const  newAttackList = [...attackIdListTemp]
-    newList["deffenceId"] = oneType.id
+    const newList = { ...effectObj }
+    const newAttackList = []
+    newList["deffenceId"] = deffenceTypeInfo.id
     newList["attackIdList"] = newAttackList
 
     // 攻撃側のタイプをループ
     attackIdList.forEach((attackId) => {
       // テラスタイプなし（id: 0）の場合は、省略
-      if(attackId == 0){ return; }
+      if(attackId == false){ return; }
 
       // デフェンスに対して弱点をつけるか判定する
-      const test = typeInfo.find((_oneType) => {
+      const attackTypeInfo = typeInfo.find((_oneType) => {
         return _oneType.id === attackId
       })
-      if(test.damage_to[effect].includes(oneType.id)){
+      if(attackTypeInfo.damage_to[effect].includes(deffenceTypeInfo.id)){
         newList["attackIdList"].push(attackId)
       }
     })
 
     // debugger
     if(newList["attackIdList"].length > 0){
-      retList.push(newList)
+      effectList.push(newList)
     }
   })
 
-  console.log("ret")
-  const sortedType = sortType({sortList: retList, teraTypeId})
+  // タイプIDに関してソートを行う
+  const sortedType = sortType({sortList: effectList, teraTypeId})
 
-  return sortedType
-      
+  // 返却用用のリスト生成
+  let retList = {...effectMap}
+  retList["list"] = sortedType
+  retList["dispName"] = effectName[effect]
+
+  return retList      
 }
 
-export {typeInfo, typeJpName, getTypeId, getTypeIdFromEnName, getTypeInfo, getTypeEffect }
+/**
+ * 指定した"相性"に対する、攻撃側タイプの相性のマップデータを生成する
+ * @param {string} effect 相性（例：効果抜群、等倍　など）
+ * @param {array} attackIdList 攻撃側のポケモンのタイプ一覧（テラスタイプ含む）
+ * @param {int} teraTypeId 攻撃側ポケモンのテラスタイプ
+ * @returns {list} 
+ */
+ const getPokeEffectMapList = ({deffencePokeInfoList, attackIdList, teraTypeId}) => {
+  console.log("getTypeEffect")
+  console.log(attackIdList)
+
+  // 返却用のリスト生成
+  let quadrupleList = {...effectMap}
+  quadrupleList["dispName"] = effectName["quadruple"]
+  quadrupleList["list"] = []
+  let doubleList = {...effectMap}
+  doubleList["dispName"] = effectName["double"]
+  doubleList["list"] = []
+  let sameList = {...effectMap}
+  sameList["dispName"] = effectName["same"]
+  sameList["list"] = []
+  let halfList = {...effectMap}
+  halfList["dispName"] = effectName["half"]
+  halfList["list"] = []
+  let quarterList = {...effectMap}
+  quarterList["dispName"] = effectName["quarter"]
+  quarterList["list"] = []
+  let noList = {...effectMap}
+  noList["dispName"] = effectName["no"]
+  noList["list"] = []
+
+  // 攻撃、防御の相性リスト生成
+  // デフェンス側のタイプを全ループ
+  deffencePokeInfoList.forEach((onePokeInfo) => {
+    // ディフェンスのポケモンのタイプを取得
+    const deffenceIdlist = [...onePokeInfo.typeId]
+
+    // 相性格納用変数用意
+    const effectInfo = { ...effectObj }
+    effectInfo["deffenceId"] = "防御側ポケモンのID"
+
+
+    // 防御側のポケモンID格納
+    let oldDeffencePokeId = ""
+    let oldAddList = ""
+
+    // 攻撃側のタイプをループ（例：サザンドラなら、悪とドラゴンの二つのタイプ）
+    attackIdList.forEach((attackId) => {
+      // テラスタイプなし（id: 0）の場合は、省略
+      if(attackId == false){ return; }
+
+      // デフェンスに対して弱点をつけるか判定する
+      // 攻撃側のタイプ相性を取得する
+      const attackTypeInfo = typeInfo.find((_oneType) => {
+        return _oneType.id === attackId
+      })
+
+      // 相性取得：攻撃側IDが、防御側のIDに対してどの"相性"になるか？判別
+      // カウント用初期値設定
+      let doubleCnt = 0
+      let sameCnt = 0
+      let halfCnt = 0
+      let noFlg = false
+
+      
+
+      // ディフェンスIDのループ（ドサイドン、地面、岩）
+      deffenceIdlist.forEach((deffenceId) => {
+        // 防御ポケモンのタイプ判定
+        effectNameList.forEach((effect) => {
+          if(attackTypeInfo.damage_to[effect].includes(deffenceId)){
+            switch (effect) {
+              case 'double':
+                doubleCnt += 1
+                break;
+              case 'same':
+                sameCnt += 1
+                break;
+              case 'half':
+                halfCnt += 1
+                break;
+              case 'no':
+                noFlg = true
+                break;
+              default:
+                break;
+            }
+          }
+        })
+      })
+
+      // debugger
+      // カウントの結果をもとに、返却用のリストを更新
+      // 4倍判定
+      if(doubleCnt == 2){
+        quadrupleList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: quadrupleList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "quadruple")})
+        oldAddList = "quadruple"
+      // 2倍判定
+      } else if(doubleCnt == 1 && noFlg == false && halfCnt == 0) {
+        doubleList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: doubleList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "double")})
+        oldAddList = "double"
+      // 等倍判定
+      } else if((doubleCnt == 1 && halfCnt == 1) || (sameCnt == 2) || (sameCnt == 1 && halfCnt == 0 && noFlg == false)){
+        sameList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: sameList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "same")})
+        oldAddList = "same"
+      // 1/2判定
+      } else if(halfCnt == 1 && noFlg == false && doubleCnt == 0){
+        halfList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: halfList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "half")})
+        oldAddList = "half"
+      // 1/4判定
+      } else if(halfCnt == 2){
+        quarterList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: quarterList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "quarter")})
+        oldAddList = "quarter"
+      // 無効判定
+      } else if(noFlg == true){
+        noList = addData({deffenceId: onePokeInfo.id, attackId: attackId, argList: noList, sameAddFlg: (oldDeffencePokeId == onePokeInfo.id) && (oldAddList == "no")})
+        oldAddList = "no"
+      }
+
+      // ポケモン更新
+      oldDeffencePokeId = onePokeInfo.id
+
+
+    })
+
+  })
+
+  debugger
+  // タイプIDに関してソートを行う
+  // const sortedType = sortType({sortList: effectList, teraTypeId})
+
+
+  return {
+    quadrupleList: quadrupleList,
+    doubleList: doubleList,
+    sameList: sameList,
+    halfList: halfList,
+    quarterList: quarterList,
+    noList: noList
+  }      
+}
+
+// 取得したポケモンのデータから、名称、アイコンのURL、種族値、タイプを取得する
+const treatPokeInfoData = ({res_info, name}) => {
+
+  // 初期値定義
+  const pokeInfoJson = {
+    name: "",
+    typeId: [],
+    icon_src: "",
+    stats: []
+  }
+
+  // タイプID取得
+  const type = getTypeIdFromEnName(res_info.types)
+
+  // 種族値取得
+  const stats = [
+    {
+      name: "H",
+      stat: res_info.stats[0].base_stat
+    },
+    {
+      name: "A",
+      stat: res_info.stats[1].base_stat
+    },
+    {
+      name: "B",
+      stat: res_info.stats[2].base_stat
+    },
+    {
+      name: "C",
+      stat: res_info.stats[3].base_stat,
+    },
+    {
+      name: "D",
+      stat: res_info.stats[4].base_stat
+    },
+    {
+      name: "S",
+      stat: res_info.stats[5].base_stat,
+    }
+  ]
+
+  // json作成
+  let newPokeInfo = {...pokeInfoJson}
+  newPokeInfo["name"] = name
+  newPokeInfo["icon_src"] = res_info.sprites.front_default
+  newPokeInfo["typeId"] = type
+  newPokeInfo["stats"] = stats
+
+  console.log("newpoke info")
+  console.log(newPokeInfo)
+
+  return newPokeInfo
+}
+
+export {typeInfo, typeJpName, getTypeId, getTypeIdFromEnName, getTypeInfo, getTypeEffectMapList, treatPokeInfoData, getPokeEffectMapList }

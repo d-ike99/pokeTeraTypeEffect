@@ -1,0 +1,49 @@
+{
+  "rankingData": [
+    {
+      "id": 65,
+      "ranking": 30,
+      "name": "フーディン",
+      "icon_src": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png",
+      "stats": {
+        "H": 55,
+        "A": 50,
+        "B": 45,
+        "C": 135,
+        "D": 95,
+        "S": 120
+      },
+      "typeId": [14]
+    },
+    {
+      "id": 149,
+      "ranking": 2,
+      "name": "カイリュー",
+      "icon_src": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png",
+      "stats": {
+        "H": 91,
+        "A": 134,
+        "B": 95,
+        "C": 100,
+        "D": 100,
+        "S": 80
+      },
+      "typeId": [16, 3]
+    },
+    {
+      "id": 635,
+      "ranking": 1,
+      "name": "サザンドラ",
+      "icon_src": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/635.png",
+      "stats": {
+        "H": 92,
+        "A": 105,
+        "B": 90,
+        "C": 125,
+        "D": 90,
+        "S": 98
+      },
+      "typeId": [17, 16]
+    }
+  ]
+}

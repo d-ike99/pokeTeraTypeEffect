@@ -46,15 +46,14 @@ const TypeContainer = ({effectMapList}) => {
   return (
     <TypeContainerStyle>
       <EffectLabelBox>
-        <EffectLeftLabelName>防御タイプ</EffectLeftLabelName>
-        <EffectRightLabelName>攻撃タイプ</EffectRightLabelName>
+        <EffectLeftLabelName>防御側</EffectLeftLabelName>
+        <EffectRightLabelName>攻撃側</EffectRightLabelName>
       </EffectLabelBox>
       {dispEffectMapList.map((oneType) => {
-          const type = typeJpName(oneType.deffenceId)
-          const typeInfo = getTypeInfo(oneType.deffenceId)
+          // 防御側
           return (
             <TypeBox key={oneType.id}>
-              <DeffenceType img_path={typeInfo.icon_path} type={type}/>
+              <DeffenceType deffenceId={oneType.deffenceId} />
               <AttackType attackIdList={oneType.attackIdList}/>
             </TypeBox>
           )})}
