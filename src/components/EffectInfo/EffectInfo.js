@@ -5,6 +5,7 @@ import PokeEffectContainer from "./PokeEffectContainer/PokeEffectContainer"
 import EffectFilter from "./EffectFilter/EffectFilter"
 import { TypeFilterProvider } from '../../utils/context/Filter/TypeFilterContext'
 import { SelectDispEffectProvider } from '../../utils/context/SelectDispEffect'
+import { EffectFilterProvider } from '../../utils/context/Filter/EffectFilterContext'
 
 // component
 const EffectInfo = () => {
@@ -13,8 +14,10 @@ const EffectInfo = () => {
       <SelectDispEffectProvider>
         <DispTypePoke />
         <TypeFilterProvider>
-          <EffectFilter />
-          <PokeEffectContainer />
+          <EffectFilterProvider>
+            <EffectFilter />
+            <PokeEffectContainer />
+          </EffectFilterProvider>
         </TypeFilterProvider>
       </SelectDispEffectProvider>
     </EffectInfoStyled>

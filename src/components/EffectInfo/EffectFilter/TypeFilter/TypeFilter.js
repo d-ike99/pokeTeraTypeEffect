@@ -26,10 +26,14 @@ const customStyles = {
   }),
   multiValue: (styles, { data }) => {
     const color = data.color;
+    const wordColor = data.wordColor;
+
+    debugger
+
     return {
       ...styles,
       backgroundColor: color,
-      color: "white"
+      color: wordColor
     };
   },
   multiValueLabel: (styles, { data }) => ({
@@ -38,28 +42,16 @@ const customStyles = {
   }),
 };
 
-const TypeFilter = () => {
+const TypeFilter = ({dispList, placeHolder, dispatch}) => {
   // logs
   console.log("type filter called")
-  // state
-  const typeFilterDispatch = useTypeFilterDispatch()
   
-  // タイプリスト生成
-  const getTypeList = typeInfo.map((oneType) => {
-    return {
-      value: oneType.name.jp,
-      label: oneType.name.jp,
-      id: oneType.id,
-      color: oneType.color
-    }
-  })
-
   // 
   const FilterTypeChange = (e) => {
-    const newFilterList = e.map((type) => {
-      return type.id
+    const newFilterList = e.map((list) => {
+      return list.id
     })
-    typeFilterDispatch(newFilterList)
+    dispatch(newFilterList)
   }
 
   return (
@@ -67,15 +59,9 @@ const TypeFilter = () => {
       <Select
         isMulti
         styles={customStyles}
-        options={getTypeList}
-        placeholder={'非表示タイプ（防御側）'}
+        options={dispList}
+        placeholder={placeHolder}
         onChange={(e) => FilterTypeChange(e)}
-      />
-      <Select
-        isMulti
-        styles={customStyles}
-        options={getTypeList}
-        placeholder={'相性'}
       />
     </TypeFilterStyle>
   )

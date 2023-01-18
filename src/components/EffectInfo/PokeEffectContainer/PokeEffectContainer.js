@@ -7,6 +7,15 @@ import { EffectBoxContainerStyled } from "./PokeEffectContainerStyle"
 import { DispLabel } from '../../Common/Label'
 import { useRankingPokeInfo } from '../../../utils/context/RankingPokeInfoContext'
 import { useSelectDispEffect } from '../../../utils/context/SelectDispEffect'
+import { useState, useEffect } from 'react'
+
+const getWindowDimensions = () => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+} 
 
 const PokeEffectContainer = () => {
   // typeId取得
@@ -20,9 +29,6 @@ const PokeEffectContainer = () => {
   console.log(typelist)
   console.log(typeof(pokeInfo.typeId))
 
-  // 表示タブの状態取得（context）
-  // TODO：ポケモン相性の場合、ポケモンのID及び、タイプIDを取得する（防御側タイプ）
-
   const attackIdList = [...pokeInfo.typeId, teraTypeId]
 
   if(pokeInfo.typeId.length === 0){
@@ -30,7 +36,6 @@ const PokeEffectContainer = () => {
   }
 
   // 相性関係作成
-  // debugger
   let quadrupleList
   let doubleList
   let sameList
@@ -48,11 +53,44 @@ const PokeEffectContainer = () => {
 
   }
 
+  // 画面サイズ取得
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    const onResize = () => {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  console.log("size")
+  console.log(windowDimensions)
+
+  // 前提：相性の表示制限は、3つまで可能
+  // - 横幅が600px以下の場合
+  //   - 表示数が3-4：一段に表示しきる
+  //   - 表示数が5-6：二段
+  // - 横幅が600px-1000pxの場合、
+  //   - 表示数が3：一段に表示しきる
+  //   - 表示数が4-6：二段に表示する
+  // - 横幅が600px-1000pxの場合、
+  //   - 表示数が3：一段に表示しきる
+  //   - 表示数が4-6：二段に表示する
+  // - 横幅が1000px-1300pxの場合、
+  //   - 表示数が3-4：一段に表示しきる
+  //   - 表示数が5-6：二段に表示する
+  // - 横幅が1300px-の場合、
+  //   - 表示数が3-6：一段に表示しきる
+
   
   return (
     <>
       <DispLabel>
         <span>相性</span>
+        <div>
+          {windowDimensions.width}
+        </div>
       </DispLabel>
       <EffectBoxContainerStyled>
         <EffectBox key={"double"} effectMapList={doubleList} />
