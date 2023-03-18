@@ -13,9 +13,18 @@ const callAPI = {
     async getPokeName(path=''){
         console.log("getPokeName called")
         const getPath = `${process.env.NEXT_PUBLIC_POKE_NAME_URL}/${path}`
+        console.log(getPath)
         const result = await callAPI.get(getPath)
 
         return result;
+    },
+    async getRankingPokeInfo(path=''){
+        console.log("getRankingPokeInfo called")
+
+        const mock = "http://localhost:3003/rankingData"
+        const result = await axios.get(mock)
+
+        return result.data;
     },
     async get(getPath) {
         const result = await axios.get(getPath)

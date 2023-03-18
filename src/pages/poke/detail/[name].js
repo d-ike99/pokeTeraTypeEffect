@@ -5,6 +5,7 @@ import PokeInfo from '../../../components/PokeInfo/PokeInfo'
 import { StyledContainer } from '../../../styles/styles'
 import { usePokeInfo, usePokeInfoDispatch, PokeInfoProvider } from '../../../utils/context/PokeInfoContext'
 import { TeraTypeProvider } from '../../../utils/context/TeraTypeContext'
+import getAllPokeId from '../../../utils/callAPI/getAllPokeId'
 
 const DetailContainer = styled.div`
   /* border-top: solid black; */
@@ -67,3 +68,22 @@ export async function getServerSideProps(context) {
     props: { pokeID: query.name }
   }
 }
+
+// export async function getStaticPaths() {
+//   const result = await axios.get(ENDPOINT).then((res) => res.data);
+
+//   if (!result) return;
+
+//   const paths = result.map((article) => ({
+//     params: { detail: `${article.id}` },
+//   }));
+
+//   return { paths, fallback: true };
+// }
+
+// // getStaticProps
+// export async function getStaticProps() {
+//   console.log("getStaticProps called")
+//   const result = await getAllPokeId.getPokeAllId();
+//   return { props: { allPokeInfo: result } };
+// }

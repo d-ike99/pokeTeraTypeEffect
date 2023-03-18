@@ -23,28 +23,35 @@ const customStyles = {
     // この設定で、タイプボックスの背景色が変わる
     padding: "0",
     margin: "0.5rem",
-  }), 
+  }),
+  multiValue: (styles, { data }) => {
+    const color = data.color;
+    const wordColor = data.wordColor;
+
+    debugger
+
+    return {
+      ...styles,
+      backgroundColor: color,
+      color: wordColor
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: "white",
+  }),
 };
 
-const TypeFilter = () => {
-  // state
-  const typeFilterDispatch = useTypeFilterDispatch()
+const TypeFilter = ({dispList, placeHolder, dispatch}) => {
+  // logs
+  console.log("type filter called")
   
-  // タイプリスト生成
-  const getTypeList = typeInfo.map((oneType) => {
-    return {
-      value: oneType.name.jp,
-      label: oneType.name.jp,
-      id: oneType.id
-    }
-  })
-
   // 
   const FilterTypeChange = (e) => {
-    const newFilterList = e.map((type) => {
-      return type.id
+    const newFilterList = e.map((list) => {
+      return list.id
     })
-    typeFilterDispatch(newFilterList)
+    dispatch(newFilterList)
   }
 
   return (
@@ -52,15 +59,9 @@ const TypeFilter = () => {
       <Select
         isMulti
         styles={customStyles}
-        options={getTypeList}
-        placeholder={'非表示タイプ（防御側）'}
+        options={dispList}
+        placeholder={placeHolder}
         onChange={(e) => FilterTypeChange(e)}
-      />
-      <Select
-        isMulti
-        styles={customStyles}
-        options={getTypeList}
-        placeholder={'相性'}
       />
     </TypeFilterStyle>
   )

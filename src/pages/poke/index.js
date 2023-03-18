@@ -1,24 +1,63 @@
-// import callAPI from "../../utils/getAPI";
-// import { useEffect, useReducer, useState } from "react"
-// import Card from "../../components/Card/Card";
-// import { StyledContainer } from "../../styles/styles";
-// import Button from "../../components/Button/Button";
-// import ButtonContainer from "../../components/Button/ButtonContainer"
-// url
+import React from 'react'
+import styled from 'styled-components'
+import EffectInfo from '../../components/EffectInfo/EffectInfo'
+import PokeInfo from '../../components/PokeInfo/PokeInfo'
+import { usePokeInfo, usePokeInfoDispatch, PokeInfoProvider } from '../../utils/context/PokeInfoContext'
+import { TeraTypeProvider } from '../../utils/context/TeraTypeContext'
+import getAllPokeId from '../../utils/callAPI/getAllPokeId'
+import { useAllPokeIdDispatch } from '../../utils/context/AllPokeIdContext'
+import { RankingPokeInfoProvider } from '../../utils/context/RankingPokeInfoContext'
 
+const DetailContainer = styled.div`
+  /* border-top: solid black; */
+  /* border: red; */
+  width: 100vw;
+  /* height: calc(100vh - 60px); */
+  /* display: flex; */
 
+  // margin, padding
+  margin-top: 60px;
+  margin-right: 0;
+  margin-left: 0;
+  padding-top: 1rem;
 
+  @media (min-width: 600px) {
+    display: flex;
+    /* border: solid; */
+    margin-right: auto;
+    margin-left: auto;
+    width: 90vw;
+  }
+`
 
+const Name = ({ allPokeId }) => {
+  // stateにIDを保持
+  const setAllPokeIdDispatch = useAllPokeIdDispatch()
+  setAllPokeIdDispatch(allPokeId)
 
+  // components
+  return (
+    <>
+      <DetailContainer>
+        <PokeInfoProvider>
+          <TeraTypeProvider>
+            <RankingPokeInfoProvider>
+              <PokeInfo />
+              <EffectInfo></EffectInfo>
+            </RankingPokeInfoProvider>
+          </TeraTypeProvider>
+        </PokeInfoProvider>
+      </DetailContainer>
+    </>
+    
+  )
+}
 
-// component
-export default function Poke() {
+export default Name
 
-
-    // return JSX
-    return (
-        <>
-            test        
-        </>
-    )
+// getStaticProps
+export async function getStaticProps() {
+  console.log("getStaticProps called")
+  const result = await getAllPokeId.getPokeAllId();
+  return { props: { allPokeId: result } };
 }

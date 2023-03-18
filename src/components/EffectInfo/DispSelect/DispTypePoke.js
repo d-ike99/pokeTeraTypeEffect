@@ -3,6 +3,7 @@ import {DispTypePokeStyled, ButtonStyled} from "./DispSelectStyle"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { tabsAnatomy } from '@chakra-ui/anatomy'
 import { createMultiStyleConfigHelpers } from '@chakra-ui/react'
+import { useSelectDispEffectDispatch } from '../../../utils/context/SelectDispEffect'
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(tabsAnatomy.keys)
@@ -37,12 +38,16 @@ const variants = {
 export const tabsTheme = defineMultiStyleConfig({ variants })
 
 const DispSelect = () => {
-  const typePokeHandler = () => {
-    console.log("ter")
+  // dispatch取得
+  const selectDispEffectDispatch = useSelectDispEffectDispatch()
+
+  // タブ選択のhandler定義
+  const typePokeHandler = (index) => {
+    selectDispEffectDispatch(index)
   }
   return (
     <DispTypePokeStyled>
-      <Tabs isFitted variant='enclosed' onChange={(e) => typePokeHandler(e)}>
+      <Tabs isFitted variant='enclosed' onChange={(index) => typePokeHandler(index)}>
         <TabList mb='1em'>
           <Tab>タイプ相性</Tab>
           <Tab>ポケモン相性</Tab>
