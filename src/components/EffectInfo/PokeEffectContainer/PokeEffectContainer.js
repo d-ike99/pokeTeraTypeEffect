@@ -54,18 +54,18 @@ const PokeEffectContainer = () => {
   }
 
   // 画面サイズ取得
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  // const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
-  useEffect(() => {
-    const onResize = () => {
-      setWindowDimensions(getWindowDimensions());
-    }
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  // useEffect(() => {
+  //   const onResize = () => {
+  //     setWindowDimensions(getWindowDimensions());
+  //   }
+  //   window.addEventListener('resize', onResize);
+  //   return () => window.removeEventListener('resize', onResize);
+  // }, []);
 
   console.log("size")
-  console.log(windowDimensions)
+  // console.log(windowDimensions)
 
   // 前提：相性の表示制限は、3つまで可能
   // - 横幅が600px以下の場合
@@ -89,7 +89,7 @@ const PokeEffectContainer = () => {
       <DispLabel>
         <span>相性</span>
         <div>
-          {windowDimensions.width}
+          {/* {windowDimensions.width} */}
         </div>
       </DispLabel>
       <EffectBoxContainerStyled>

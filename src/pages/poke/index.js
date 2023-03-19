@@ -21,11 +21,24 @@ const DetailContainer = styled.div`
   margin-left: 0;
   padding-top: 1rem;
 
+  // 横幅600px"以上"で適応
   @media (min-width: 600px) {
+    display: flex;
+    /* border: solid; */
+    margin-right: 0;
+    margin-left: 0;
+
+    // 全体の横幅に余裕を持たせる
+    /* width: 100vw; */
+  }
+  // 横幅1000px"以上"で適応
+  @media (min-width: 1000px) {
     display: flex;
     /* border: solid; */
     margin-right: auto;
     margin-left: auto;
+
+    // 全体の横幅に余裕を持たせる
     width: 90vw;
   }
 `
