@@ -2,13 +2,12 @@ import React from 'react'
 import { usePokeInfo } from '../../../../utils/context/PokeInfoContext'
 import styled from 'styled-components'
 import PokeType from './PokeType/PokeType'
+import { PokeInfoLabelContainer } from '../../PokeInfoStyle'
 
-const TypeContainerStyle = styled.div`
+// style定義
+const TypeContainerStyle = styled(PokeInfoLabelContainer)`
   display: flex;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
 `
-
 
 const TypeContainer = () => {
   // context呼び出し

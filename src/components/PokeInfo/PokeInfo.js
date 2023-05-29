@@ -6,6 +6,7 @@ import { usePokeInfo, usePokeInfoDispatch } from '../../utils/context/PokeInfoCo
 import { treatPokeInfoData  } from '../../utils/data/TypeInfo'
 import PokeStats from './PokeStats/PokeStats'
 import PokeTypeContainer from './PokeType/PokeTypeContainer'
+import DispControlContainer from "./DispControlContainer/DispControlContainer"
 import { usePokeId, usePokeIdDispatch } from '../../utils/context/PokeIdContext'
 import { useRankingPokeInfoDispatch } from '../../utils/context/RankingPokeInfoContext'
 
@@ -69,6 +70,8 @@ const PokeInfo = () => {
       <PokeName pokeID={pokeId}/>
       <PokeStats />
       <PokeTypeContainer />
+      <DispControlContainer />
+
 
 
       {/* {pokeInfo["typeId"].map((typeId) => {

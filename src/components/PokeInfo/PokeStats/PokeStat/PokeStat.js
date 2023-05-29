@@ -1,27 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { PokeInfoLabelContainer } from '../../PokeInfoStyle'
 
-const PokeStatStyle = styled.div`
+// style定義
+const PokeStatStyle = styled(PokeInfoLabelContainer)`
   /* border: solid; */
   display: flex;
-
-  margin-top: 0.1rem;
-  margin-bottom: 0.1rem;
-
   color: gray;
 `
-
-const TestStyle = styled.div`
+const StatNameStyle = styled.div`
   font-size: smaller;
-  /* border: solid; */
   width: 10%;
-  /* padding-right: 1rem; */
-
-
-  /* padding-top: auto;
-  padding-bottom: auto; */
 `
-
 const GraphStyle = styled.div`
   width: 100%;
   border: solid;
@@ -39,7 +29,7 @@ const GraphStyle = styled.div`
 const PokeStat = ({statName, value}) => {
   return (
     <PokeStatStyle>
-      <TestStyle>{statName}</TestStyle>
+      <StatNameStyle>{statName}</StatNameStyle>
       <GraphStyle value={{main: value}}>{value}</GraphStyle>
     </PokeStatStyle>
   )

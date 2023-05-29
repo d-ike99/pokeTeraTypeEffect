@@ -1,21 +1,10 @@
 import React from 'react'
 import { usePokeInfo } from '../../../utils/context/PokeInfoContext'
-import PokeType from './TypeContainer.js/PokeType/PokeType'
 import TeraType from './TeraType/TeraType'
 import styled from 'styled-components'
 import { DispLabel } from '../../Common/Label'
 import TypeContainer from './TypeContainer.js/TypeContainer'
-
-const PokeTypeContainerStyle = styled.div`
-  /* border: solid; */
-  border-radius: 5px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 1rem;
-
-
-`
+import { PokeInfoContainer } from '../PokeInfoStyle'
 
 const TeraTypeValue = styled(DispLabel)`
   margin-top: 2rem;
@@ -26,18 +15,14 @@ const PokeTypeContainer = () => {
   const pokeInfo = usePokeInfo()
 
   return (
-    <PokeTypeContainerStyle>
+    <PokeInfoContainer>
       <DispLabel>
         <span>タイプ</span>
       </DispLabel>
       <TypeContainer />
-      {/* {pokeInfo["typeId"].map((typeId) => {
-            return (<PokeType key={typeId} typeId={typeId} />)
-          })
-        } */}
-      <TeraTypeValue><span>テラタイプ</span></TeraTypeValue>
+      <TeraTypeValue><span>テラスタイプ</span></TeraTypeValue>
       <TeraType></TeraType>
-    </PokeTypeContainerStyle>
+    </PokeInfoContainer>
   )
 }
 

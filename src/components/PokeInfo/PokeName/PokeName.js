@@ -2,33 +2,22 @@ import React from 'react'
 import { usePokeInfo } from '../../../utils/context/PokeInfoContext'
 import Image from 'next/image'
 import styled from 'styled-components'
+import { PokeInfoContainer } from '../PokeInfoStyle'
 
-const PokeInfoStyled = styled.div`
-  margin-top: 10px;
-  /* border: solid; */
-  top: 100px;
+const PokeInfoNameContainer = styled(PokeInfoContainer)`
+  /* margin-top: 10px; */
+  /* top: 100px; */
   width: 95%;
   display: flex;
   justify-content: space-between;
-
   font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: auto;
 `
 
 const PokeNameStyled = styled.div`
-  /* margin-top: 80px; */
   /* border: solid; */
-  width: 50%;
-  
-  text-align: left;
+  width: 50%;  
   margin: auto;
-  margin-left: 2rem;
   font-size: 20px;
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
 `
 
 const myLoader = ({ src, width, quality }) => {
@@ -48,12 +37,12 @@ const PokeName = ({ pokeID }) => {
   // return jsx
   return (
     <>
-      <PokeInfoStyled>
+      <PokeInfoNameContainer>
         <Image loader={myLoader} src={pokeInfo.icon_src} alt={pokeInfo.icon_src} width="60" height="60"></Image>
         {/* <Image src={pokeInfo.icon_src} alt="me" width="44" height="44" /> */}
         <PokeNameStyled>{pokeInfo.name}</PokeNameStyled>
 
-      </PokeInfoStyled>
+      </PokeInfoNameContainer>
 
     </>
   )

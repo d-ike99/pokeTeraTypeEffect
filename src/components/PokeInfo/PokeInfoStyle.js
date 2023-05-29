@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const PokeInfoStyled = styled.div`
-  /* border: solid 5px; */
-  width: 100vw;
+  border: solid 1px red;
+  /* width: 100vw; */
   /* width: 25%; */
 
   // margin, padding
@@ -23,5 +23,20 @@ const PokeInfoStyled = styled.div`
 
   }
 `
+const PokeInfoContainer = styled.div`
+  // test
+  /* border: solid 1px; */
 
-export {PokeInfoStyled}
+  width: 80%;
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0rem 1rem;
+`
+const PokeInfoLabelContainer = styled.div`
+  margin: 0.1rem 0.5rem;
+  /* border: solid 1px */
+`
+
+export {PokeInfoStyled, PokeInfoContainer, PokeInfoLabelContainer}
